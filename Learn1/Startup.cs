@@ -8,12 +8,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Learn1.Models;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
+using Microsoft.Extensions.Logging;
 
 namespace Learn1
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration) //, ILogger<Startup> Logger)
         {
             Configuration = configuration;
         }
@@ -30,7 +32,8 @@ namespace Learn1
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
+				Log.Debug("Startup");
+				if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();

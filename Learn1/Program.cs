@@ -16,19 +16,18 @@ namespace Learn1
     {
         public static void Main(string[] args)
         {
-			var i = 1;
 			var host = BuildWebHost(args); //.Run();
 
 			Log.Logger = new LoggerConfiguration()
 				 .MinimumLevel.Debug()
-				 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+				 .MinimumLevel.Override("Microsoft", LogEventLevel.Error)
 				 .Enrich.FromLogContext()
 				 .WriteTo.Console()
 				 .WriteTo.RollingFile("./Logs/log-{Date}.txt", shared: true)
 				 //.WriteTo.MSSqlServer(configuration.GetConnectionString("IA_DB_1Database"), "Log")
 				 .CreateLogger();
 
-			Log.Information("About to start Website.");
+			Log.Debug("About to start Website.");
 
 			host.Run();
 
@@ -76,7 +75,11 @@ namespace Learn1
 
 		public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
+					 .UseKestrel()
+					 .UseIISIntegration()
+					 .UseContentRoot(Directory.GetCurrentDirectory())
+					 .UseStartup<Startup>()
+					 .UseSerilog()
                 .Build();
-    }
+	}
 }

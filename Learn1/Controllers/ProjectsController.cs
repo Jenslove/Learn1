@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Learn1.Models;
+using Serilog;
 
 namespace Learn1.Controllers
 {
@@ -21,7 +22,7 @@ namespace Learn1.Controllers
         // GET: Projects
         public async Task<IActionResult> Index()
         {
-				
+			Log.Debug("ProjectController");
             var iA_DB_1Context = _context.Project.Include(p => p.OrganizationNavigation).Include(p => p.UserNavigation);
             return View(await iA_DB_1Context.ToListAsync());
         }
