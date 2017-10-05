@@ -21,6 +21,7 @@ namespace Learn1.Controllers
         // GET: Projects
         public async Task<IActionResult> Index()
         {
+				
             var iA_DB_1Context = _context.Project.Include(p => p.OrganizationNavigation).Include(p => p.UserNavigation);
             return View(await iA_DB_1Context.ToListAsync());
         }

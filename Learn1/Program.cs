@@ -7,6 +7,8 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Events;
 
 namespace Learn1
 {
@@ -14,10 +16,65 @@ namespace Learn1
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
-        }
+			var i = 1;
+			var host = BuildWebHost(args); //.Run();
 
-        public static IWebHost BuildWebHost(string[] args) =>
+			Log.Logger = new LoggerConfiguration()
+				 .MinimumLevel.Debug()
+				 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+				 .Enrich.FromLogContext()
+				 .WriteTo.Console()
+				 .WriteTo.RollingFile("./Logs/log-{Date}.txt", shared: true)
+				 //.WriteTo.MSSqlServer(configuration.GetConnectionString("IA_DB_1Database"), "Log")
+				 .CreateLogger();
+
+			Log.Information("About to start Website.");
+
+			host.Run();
+
+			//var configuration = new ConfigurationBuilder()
+			//	 .SetBasePath(Directory.GetCurrentDirectory())
+			//            .AddJsonFile("appsettings.json")
+			//            .Build();
+
+			//      Log.Logger = new LoggerConfiguration()
+			//          .MinimumLevel.Debug()
+			//          .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+			//          .Enrich.FromLogContext()
+			//          .WriteTo.Console()
+			//.WriteTo.RollingFile("log-{Date}.txt", shared: true)
+			////.WriteTo.MSSqlServer(configuration.GetConnectionString("IA_DB_1Database"), "Log")
+			//          .CreateLogger();
+
+			//      try
+			//      {
+			//          Log.Information("Starting web host");
+
+			//          var host = new WebHostBuilder()
+			//              .UseKestrel()
+			//              .UseIISIntegration()
+			//              //.UseContentRoot(Directory.GetCurrentDirectory())
+			//              .UseStartup<Startup>()
+			//              .UseSerilog()  // <- The magic
+			//              .Build();
+
+
+			//          host.Run();
+
+			//          //return 0;
+			//      }
+			//      catch (Exception ex)
+			//      {
+			//          Log.Fatal(ex, "Host terminated unexpectedly");
+			//          //return 1;
+			//      }
+			//      finally
+			//      {
+			//          Log.CloseAndFlush();
+			//      }
+		}
+
+		public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .Build();
