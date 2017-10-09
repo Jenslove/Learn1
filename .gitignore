@@ -259,3 +259,5 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/Learn1/Logs/log-20171006.txt
+/Learn1/Logs/log-20171009.txt

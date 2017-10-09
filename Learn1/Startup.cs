@@ -8,7 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Learn1.Models;
 using Microsoft.EntityFrameworkCore;
-using Serilog;
+//using Serilog;
+//using Serilog.Events;
 using Microsoft.Extensions.Logging;
 
 namespace Learn1
@@ -18,7 +19,7 @@ namespace Learn1
         public Startup(IConfiguration configuration) //, ILogger<Startup> Logger)
         {
             Configuration = configuration;
-        }
+        } 
 
         public IConfiguration Configuration { get; }
 

@@ -36,7 +36,8 @@ namespace Learn1
 				 .WriteTo.RollingFile("./Logs/log-{Date}.txt", shared: true)
 				 .CreateLogger();
 
-			//Log.Debug("ConStr{a}", configuration.GetConnectionString("IA_DB_1Database"));
+			configuration = null; //cleaning up this instance 
+
 			Log.Debug("About to start Website.");
 
 			try {
