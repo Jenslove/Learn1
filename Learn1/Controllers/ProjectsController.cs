@@ -23,7 +23,9 @@ namespace Learn1.Controllers
         public async Task<IActionResult> Index()
         {
 			Log.Debug("ProjectController");
-            var iA_DB_1Context = _context.Project.Include(p => p.OrganizationNavigation).Include(p => p.UserNavigation);
+			int a = 10, b = 0;
+			var i = a / b;
+			var iA_DB_1Context = _context.Project.Include(p => p.OrganizationNavigation).Include(p => p.UserNavigation);
             return View(await iA_DB_1Context.ToListAsync());
         }
 
